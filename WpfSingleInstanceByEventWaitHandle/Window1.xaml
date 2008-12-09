@@ -2,7 +2,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Window1" Height="300" Width="300">
-    <Grid>
-        
+    <Grid Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+		
+		<RichTextBox BorderThickness="0">
+			<FlowDocument>
+
+				<Paragraph TextAlignment="Center" FontWeight="bold">
+					WpfSingleInstanceByEventWaitHandle
+				</Paragraph>
+
+				<Paragraph>
+					WPF application Single Instance in one line of code
+				</Paragraph>
+
+			</FlowDocument>
+		</RichTextBox>
+		
     </Grid>
 </Window>
