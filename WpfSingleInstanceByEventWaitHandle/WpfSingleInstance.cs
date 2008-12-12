@@ -78,7 +78,7 @@ namespace WpfSingleInstanceByEventWaitHandle
 
 
 
-
+		// Args functionality for test purpose and not developed carefuly
 		#region Args
 
 		internal static readonly object StartArgKey = "StartArg";
