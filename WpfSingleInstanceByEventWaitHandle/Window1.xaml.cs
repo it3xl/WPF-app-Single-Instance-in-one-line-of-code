@@ -19,9 +19,27 @@ namespace WpfSingleInstanceByEventWaitHandle
 	/// </summary>
 	public partial class Window1 : Window
 	{
+
+		internal delegate void ProcessArgDelegate(String arg);
+		internal static ProcessArgDelegate ProcessArg;
+
+
 		public Window1()
 		{
+			ProcessArg = delegate(String arg)
+			{
+				ArgsRun.Text = arg;
+			};
+
+			this.Initialized += delegate(object sender, EventArgs e) {
+				ArgsRun.Text = (String)Application.Current.Resources[WpfSingleInstance.StartArgKey];
+				Application.Current.Resources.Remove(WpfSingleInstance.StartArgKey);
+			};
+
+
 			InitializeComponent();
+
 		}
+
 	}
 }
