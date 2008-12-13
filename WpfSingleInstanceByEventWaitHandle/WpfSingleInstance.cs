@@ -57,13 +57,13 @@ namespace WpfSingleInstanceByEventWaitHandle
 		}
 
 
-		private delegate void activate();
+		private delegate void dispatcherInvoker();
 
 		private static void waitOrTimerCallback(Object state, Boolean timedOut)
 		{
 			Application app = (Application)state;
 			app.Dispatcher.BeginInvoke(
-					new activate(delegate() {
+					new dispatcherInvoker(delegate() {
 						Application.Current.MainWindow.Activate();
 
 						// !!! delete it if not use
