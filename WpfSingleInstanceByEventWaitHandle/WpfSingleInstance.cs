@@ -6,63 +6,63 @@ using System.IO.IsolatedStorage;
 
 namespace WpfSingleInstanceByEventWaitHandle
 {
-    public static class WpfSingleInstance
-    {
+	public static class WpfSingleInstance
+	{
 
 		internal static void Make(String name, Application app)
-        {
+		{
 
-            EventWaitHandle eventWaitHandle = null;
-            String eventName = Environment.MachineName + "-" + name;
+			EventWaitHandle eventWaitHandle = null;
+			String eventName = Environment.MachineName + "-" + name;
 
-            bool isFirstInstance = false;
+			bool isFirstInstance = false;
 
-            try
-            {
-                eventWaitHandle = EventWaitHandle.OpenExisting(eventName);
-            }
-            catch
-            {
-                // it's first instance
-                isFirstInstance = true;
-            }
+			try
+			{
+				eventWaitHandle = EventWaitHandle.OpenExisting(eventName);
+			}
+			catch
+			{
+				// it's first instance
+				isFirstInstance = true;
+			}
 
-            if (isFirstInstance)
-            {
-                eventWaitHandle = new EventWaitHandle(
-                    false,
-                    EventResetMode.AutoReset,
-                    eventName);
+			if (isFirstInstance)
+			{
+				eventWaitHandle = new EventWaitHandle(
+					false,
+					EventResetMode.AutoReset,
+					eventName);
 
-                ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, waitOrTimerCallback, app, Timeout.Infinite, false);
+				ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, waitOrTimerCallback, app, Timeout.Infinite, false);
 
-                // not need more
-                eventWaitHandle.Close();
+				// not need more
+				eventWaitHandle.Close();
 
 
 				// !!! delete it if not use
 				setFirstArgs();
-            }
-            else
-            {
+			}
+			else
+			{
 				// !!! delete it if not use
 				setArgs();
 
 
-                eventWaitHandle.Set();
+				eventWaitHandle.Set();
 
-                // For that exit no interceptions
-                Environment.Exit(0);
-            }
-        }
+				// For that exit no interceptions
+				Environment.Exit(0);
+			}
+		}
 
 
-        private delegate void activate();
+		private delegate void activate();
 
-        private static void waitOrTimerCallback(Object state, Boolean timedOut)
-        {
-            Application app = (Application)state;
-            app.Dispatcher.BeginInvoke(
+		private static void waitOrTimerCallback(Object state, Boolean timedOut)
+		{
+			Application app = (Application)state;
+			app.Dispatcher.BeginInvoke(
 					new activate(delegate() {
 						Application.Current.MainWindow.Activate();
 
@@ -72,7 +72,7 @@ namespace WpfSingleInstanceByEventWaitHandle
 					}),
 					null
 				);
-        }
+		}
 
 
 
@@ -137,5 +137,5 @@ namespace WpfSingleInstanceByEventWaitHandle
 		#endregion
 
 
-    }
+	}
 }
