@@ -2,11 +2,13 @@
 
 ## Usage
 
-* Add to your App.xaml.cs or to the main window of your WPF app.
+* Add the following code to your App.xaml.cs or to a main window of your WPF app.
+
+To have one instance per user
 
     WpfSingleInstance.Make();
 
-or for all users at once
+To have one instance per machine
 
     WpfSingleInstance.Make(SingleInstanceModes.ForEveryUser);
 
@@ -22,7 +24,6 @@ or for all users at once
 I heard that others evolved my approach significantly.<br/>
 Look out to those projects too.
 
-But this project will stay small and simple as the initial idea.<br/>
-
 P.S.: Consider a string-name passes to EventWaitHandle as something vulnerable.<br/>
-It's your turn for improves )
+Rename it.  
+And now it is your turn to make improvements )
