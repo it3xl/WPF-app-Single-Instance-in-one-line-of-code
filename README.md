@@ -21,8 +21,7 @@ To have one instance per machine:
 * No redundant WCF and Remoting undercover interactions.
 * It works with using of EventWaitHandle and it is so simple.
 
-I heard that others evolved my approach significantly.<br/>
-Look out to those projects too.
+I heard that others evolved my approach significantly. Look out to those projects too.
 
 P.S.: Consider passing of a string-name to EventWaitHandle.OpenExisting(...) as something vulnerable.<br/>
 
