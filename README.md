@@ -10,7 +10,7 @@ To have a single instance per user's Windows session:
 
 To have one instance per machine:
 
-    WpfSingleInstance.Make("MyWpfApplication", uniqPerUser: false);
+    WpfSingleInstance.Make("MyWpfApplication", uniquePerUser: false);
 
 * Add to your project this modest CSharp file [WpfSingleInstance.cs](https://github.com/it3xl/WPF-app-Single-Instance-in-one-line-of-code/blob/master/WpfSingleInstanceByEventWaitHandle/WpfSingleInstance.cs) or entire code from it.
 
