@@ -26,4 +26,4 @@ Look out to those projects too.
 
 P.S.: Consider passing of a string-name to EventWaitHandle.OpenExisting(...) as something vulnerable.<br/>
 
-And now it is your turn to make improvements )
+And now it is your turn to make improvements :)
