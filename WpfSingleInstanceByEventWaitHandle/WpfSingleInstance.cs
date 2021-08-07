@@ -8,7 +8,7 @@ namespace WpfSingleInstanceByEventWaitHandle
     {
         private static bool AlreadyProcessedOnThisInstance;
 
-        internal static void Make(string appName, bool uniqPerUser = true)
+        internal static void Make(string appName, bool uniquePerUser = true)
         {
             if(AlreadyProcessedOnThisInstance)
             {
@@ -18,7 +18,7 @@ namespace WpfSingleInstanceByEventWaitHandle
 
             Application app = Application.Current;
 
-            string eventName = uniqPerUser
+            string eventName = uniquePerUser
                 ? $"{appName}-{Environment.MachineName}-{Environment.UserDomainName}-{Environment.UserName}"
                 : $"{appName}-{Environment.MachineName}";
 
