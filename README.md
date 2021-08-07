@@ -29,4 +29,4 @@ I heard that others evolved my approach significantly. Look out to those project
 
 P.S.: Consider passing of a string-name to EventWaitHandle.OpenExisting(...) as something vulnerable.<br/>
 
-Now it's your turn to make improvements for this approach :)
+JFYI: This approach was created many years ago and updated for VS 2019. Now it's your turn to make improvements for this approach :)
