@@ -6,13 +6,25 @@ namespace WpfSingleInstanceByEventWaitHandle
 {
     public static class WpfSingleInstance
     {
-        internal static void Make(string name, Application app)
+        private static bool AlreadyProcessedOnThisInstance;
+
+        internal static void Make(string appName, bool uniqPerUser = true)
         {
+            if(AlreadyProcessedOnThisInstance)
+            {
+                return;
+            }
+            AlreadyProcessedOnThisInstance = true;
+
+            Application app = Application.Current;
+
+            string eventName = uniqPerUser
+                ? $"{appName}-{Environment.MachineName}-{Environment.UserDomainName}-{Environment.UserName}"
+                : $"{appName}-{Environment.MachineName}";
+
+            bool isSecondaryInstance = true;
+
             EventWaitHandle eventWaitHandle = null;
-            string eventName = Environment.MachineName + "-" + name;
-
-            bool isFirstInstance = false;
-
             try
             {
                 eventWaitHandle = EventWaitHandle.OpenExisting(eventName);
@@ -20,34 +32,42 @@ namespace WpfSingleInstanceByEventWaitHandle
             catch
             {
                 // This code only runs on the first instance.
-                isFirstInstance = true;
+                isSecondaryInstance = false;
             }
 
-            if (isFirstInstance)
+            if (isSecondaryInstance)
             {
-                eventWaitHandle = new EventWaitHandle(
-                    false,
-                    EventResetMode.AutoReset,
-                    eventName);
+                ActivateFirstInstanceWindow(eventWaitHandle);
 
-                _ = ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, waitOrTimerCallback, app, Timeout.Infinite, false);
-
-                // Do not need any more.
-                eventWaitHandle.Close();
-            }
-            else
-            {
-                _ = eventWaitHandle.Set();
-
-                // Let's produce an non-interceptional exit.
+                // Let's produce a non-interceptional exit (2010 year approach).
                 Environment.Exit(0);
             }
+
+            RegisterFirstInstanceWindowActivation(app, eventName);
         }
 
-        private static void waitOrTimerCallback(object state, bool timedOut)
+        private static void ActivateFirstInstanceWindow(EventWaitHandle eventWaitHandle)
+        {
+            // Let's notify the first instance to activate its main window.
+            _ = eventWaitHandle.Set();
+        }
+
+        private static void RegisterFirstInstanceWindowActivation(Application app, string eventName)
+        {
+            EventWaitHandle eventWaitHandle = new EventWaitHandle(
+                false,
+                EventResetMode.AutoReset,
+                eventName);
+
+            _ = ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, WaitOrTimerCallback, app, Timeout.Infinite, false);
+
+            eventWaitHandle.Close();
+        }
+
+        private static void WaitOrTimerCallback(object state, bool timedOut)
         {
             Application app = (Application)state;
-            _ = app.Dispatcher.BeginInvoke(new Action(() => 
+            _ = app.Dispatcher.BeginInvoke(new Action(() =>
             {
                 _ = Application.Current.MainWindow.Activate();
             }));

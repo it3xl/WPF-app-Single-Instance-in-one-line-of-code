@@ -15,6 +15,14 @@
                     Try to run my another instance.
                 </Paragraph>
 
+                <Paragraph>
+                    I was started from:
+                    <LineBreak/>
+                    <Run Name="MyLocationFullPath" Foreground="Red"></Run>
+                    <LineBreak/>
+                    Or copy my .exe file and try to run it from anoher location.
+                </Paragraph>
+
             </FlowDocument>
         </RichTextBox>
         

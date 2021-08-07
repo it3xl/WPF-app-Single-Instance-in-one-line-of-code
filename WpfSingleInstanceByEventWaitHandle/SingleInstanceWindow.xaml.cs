@@ -9,7 +9,11 @@ namespace WpfSingleInstanceByEventWaitHandle
     {
         public SingleInstanceWindow()
         {
+            WpfSingleInstance.Make("MyWpfApplication");
+
             InitializeComponent();
+
+            MyLocationFullPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
         }
     }
 }

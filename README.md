@@ -4,13 +4,13 @@
 
 * Add the following code to your App.xaml.cs or to a main window of your WPF app.
 
-To have one instance per user
+To have one instance per user Windows session:
 
-    WpfSingleInstance.Make();
+    WpfSingleInstance.Make("MyWpfApplication");
 
-To have one instance per machine
+To have one instance per machine:
 
-    WpfSingleInstance.Make(SingleInstanceModes.ForEveryUser);
+    WpfSingleInstance.Make("MyWpfApplication", false);
 
 * Add to your project this modest CSharp file [WpfSingleInstance.cs](https://github.com/it3xl/WPF-app-Single-Instance-in-one-line-of-code/blob/master/WpfSingleInstanceByEventWaitHandle/WpfSingleInstance.cs) or entire code from it.
 
@@ -26,4 +26,4 @@ Look out to those projects too.
 
 P.S.: Consider passing of a string-name to EventWaitHandle.OpenExisting(...) as something vulnerable.<br/>
 
-And now it is your turn to make improvements :)
+Now it's your turn to make improvements for this approach :)
