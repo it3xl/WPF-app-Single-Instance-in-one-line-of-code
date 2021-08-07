@@ -30,33 +30,27 @@ namespace WpfSingleInstanceByEventWaitHandle
                     EventResetMode.AutoReset,
                     eventName);
 
-                _ = ThreadPool.RegisterWaitForSingleObject(eventWaitHandle,
-                    waitOrTimerCallback, app, Timeout.Infinite, false);
+                _ = ThreadPool.RegisterWaitForSingleObject(eventWaitHandle, waitOrTimerCallback, app, Timeout.Infinite, false);
 
                 // Do not need any more.
                 eventWaitHandle.Close();
             }
             else
             {
-                eventWaitHandle.Set();
+                _ = eventWaitHandle.Set();
 
-                // Let's produce an exit whith no possible interceptions.
+                // Let's produce an non-interceptional exit.
                 Environment.Exit(0);
             }
         }
 
-        private delegate void dispatcherInvoker();
-
         private static void waitOrTimerCallback(object state, bool timedOut)
         {
             Application app = (Application)state;
-            _ = app.Dispatcher.BeginInvoke(
-                new dispatcherInvoker(delegate ()
-                {
-                    Application.Current.MainWindow.Activate();
-                }),
-                null
-            );
+            _ = app.Dispatcher.BeginInvoke(new Action(() => 
+            {
+                _ = Application.Current.MainWindow.Activate();
+            }));
         }
     }
 }
