@@ -23,7 +23,7 @@ namespace WpfSingleInstanceByEventWaitHandle
 			}
 			catch
 			{
-				// it's first instance
+				// This code only runs on the first instance.
 				isFirstInstance = true;
 			}
 
