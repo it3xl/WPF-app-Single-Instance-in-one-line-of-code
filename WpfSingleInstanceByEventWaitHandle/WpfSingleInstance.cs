@@ -39,7 +39,7 @@ namespace WpfSingleInstanceByEventWaitHandle
             {
                 ActivateFirstInstanceWindow(eventWaitHandle);
 
-                // Let's produce a non-interceptional exit (2010 year approach).
+                // Let's produce a non-interceptable exit (2009 year approach).
                 Environment.Exit(0);
             }
 
